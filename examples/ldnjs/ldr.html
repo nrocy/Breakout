@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Arduino Fun</title>
+	<script src="/dist/Breakout.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- only needed for node, included to make life easier -->
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript">
+		window.onload = function() {
+			var useNode = false,
+				host = "localhost",
+				port = (useNode ? 8080 : 8887),
+				arduino;
+
+			// Enable debug output
+			BO.enableDebugging = true;
+
+			arduino = new BO.IOBoard(host, port, useNode);
+			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
+
+				var ldr = new BO.io.Potentiometer(arduino, arduino.getAnalogPin(0));
+				ldr.addEventListener(BO.io.PotEvent.CHANGE, function(event) {
+					document.getElementById("ldr").value = event.target.value;
+				});
+			});
+		}
+
+	</script>
+</head>
+<body>
+	<input type="text" id="ldr">
+</body>
+</html>

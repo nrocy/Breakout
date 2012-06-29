@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Arduino Fun</title>
+	<script src="/dist/Breakout.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- only needed for node, included to make life easier -->
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript">
+		window.onload = function() {
+			var useNode = false,
+				host = "localhost",
+				port = (useNode ? 8080 : 8887),
+				arduino;
+
+			// Enable debug output
+			BO.enableDebugging = true;
+
+			arduino = new BO.IOBoard(host, port, useNode);
+			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
+
+				arduino.enableAnalogPin(1);
+				var sensor = arduino.getAnalogPin(1);
+
+				sensor.addEventListener(BO.PinEvent.CHANGE, function(event) {
+					var milliVolts = event.target.value * 5000,
+						temperature = (milliVolts - 500) / 10;
+
+					document.getElementById("temperature").value = temperature;
+				});
+			});
+		}
+
+	</script>
+</head>
+<body>
+	<input type="text" id="temperature">
+</body>
+</html>

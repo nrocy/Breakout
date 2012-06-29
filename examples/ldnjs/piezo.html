@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Arduino Fun</title>
+	<script src="/dist/Breakout.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- only needed for node, included to make life easier -->
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript">
+		window.onload = function() {
+			var useNode = false,
+				host = "localhost",
+				port = (useNode ? 8080 : 8887),
+				arduino;
+
+			// Enable debug output
+			BO.enableDebugging = true;
+
+			arduino = new BO.IOBoard(host, port, useNode);
+			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
+
+				arduino.setDigitalPinMode(3, BO.Pin.PWM);
+				var buzzer = arduino.getDigitalPin(3);
+
+				buzzer.value = 1;
+				setTimeout(function() {
+					buzzer.value = 0;
+				}, 500);
+			});
+		}
+
+	</script>
+</head>
+<body>
+</body>
+</html>

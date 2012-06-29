@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Arduino Fun</title>
+	<script src="/dist/Breakout.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- only needed for node, included to make life easier -->
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript">
+		window.onload = function() {
+			var useNode = false,
+				host = "localhost",
+				port = (useNode ? 8080 : 8887),
+				arduino;
+
+			// Enable debug output
+			BO.enableDebugging = true;
+
+			arduino = new BO.IOBoard(host, port, useNode);
+			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
+
+				var led = new BO.io.LED(arduino, arduino.getDigitalPin(7));
+				var button = new BO.io.Button(arduino, arduino.getDigitalPin(2));
+
+				button.addEventListener(BO.io.ButtonEvent.PRESS, function(event) {
+					led.on();
+				});
+
+				button.addEventListener(BO.io.ButtonEvent.RELEASE, function(event) {
+					led.off();
+				});
+			});
+		}
+
+	</script>
+</head>
+<body>
+</body>
+</html>

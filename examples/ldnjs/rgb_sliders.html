@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Arduino Fun</title>
+	<script src="../libs/jquery-1.7.min.js"></script>
+	<script src="/dist/Breakout.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- only needed for node, included to make life easier -->
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var useNode = false,
+				host = "localhost",
+				port = (useNode ? 8080 : 8887),
+				arduino;
+
+			// Enable debug output
+			BO.enableDebugging = true;
+
+			arduino = new BO.IOBoard(host, port, useNode);
+			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
+
+			var rgbLED = new BO.io.RGBLED(arduino, arduino.getDigitalPin(11), arduino.getDigitalPin(10), arduino.getDigitalPin(9), BO.io.RGBLED.COMMON_ANODE);
+			rgbLED.setColor(0, 0, 0);
+			$("input[type=range]").change(function() {
+				var r = $("input[name=R]").val(),
+						g = $("input[name=G]").val(),
+						b = $("input[name=B]").val();
+
+				rgbLED.setColor(r, g, b);
+			});
+		});
+	});
+
+	</script>
+</head>
+<body>
+<body>
+	<div>R <input name="R" type="range" min="0" max="255" value="0"></div>
+	<div>G <input name="G" type="range" min="0" max="255" value="0"></div>
+	<div>B <input name="B" type="range" min="0" max="255" value="0"></div>
+</body>
+</html>
