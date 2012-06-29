@@ -12,7 +12,7 @@ JSUTILS.EventDispatcher = (function () {
 	/**
 	 * An DOM-like or as3-like EventDispatcher class.
 	 *
-	 * @class The EventDispatcher class mimics the DOM event dispatcher model so the 
+	 * @class The EventDispatcher class mimics the DOM event dispatcher model so the
 	 * user can add and remove event listeners in a familiar way. Event bubbling is
 	 * not available because events are dispatched in relation to state changes of
 	 * physical components instead of layered graphics so there is nothing to bubble up.
@@ -21,10 +21,10 @@ JSUTILS.EventDispatcher = (function () {
 	 */
 	EventDispatcher = function(target) {
 		"use strict";
-		
+
 		this._target = target || null;
 		this._eventListeners = {};
-		
+
 		this.name = "EventDispatcher";
 	};
 
@@ -41,7 +41,7 @@ JSUTILS.EventDispatcher = (function () {
 			}
 			this._eventListeners[type].push(listener);
 		},
-		
+
 		/**
 		 * Description
 		 * @param {String} type The event type
@@ -55,7 +55,7 @@ JSUTILS.EventDispatcher = (function () {
 			}
 			// to do: if no more listeners for a type, delete key?
 		},
-		
+
 		/**
 		 * Description
 		 * @param {String} type The event type
@@ -66,36 +66,36 @@ JSUTILS.EventDispatcher = (function () {
 				return true;
 			} else {
 				return false;
-			}	
+			}
 		},
-		
+
 		/**
 		 * Description
 		 * @param {Event} type The Event object.
 		 * @param {Object} optionalParams Optional parameters passed as an object.
 		 * return {boolean} True if dispatch is successful, false if not.
-		 */	
+		 */
 		dispatchEvent: function(event, optionalParams) {
-			
+
 			event.target = this._target;
-			var isSuccess = false;		
+			var isSuccess = false;
 
 			// add any optional params to the Event object
 			for (var obj in optionalParams) {
 				event[obj.toString()] = optionalParams[obj];
 			}
-						
+
 			if (this.hasEventListener(event.type)) {
 				for (var j=0, len=this._eventListeners[event.type].length; j<len; j++) {
-					try {
+					//try {
 						this._eventListeners[event.type][j].call(this, event);
 						isSuccess = true;
-					} catch(e) {
+					//} catch(e) {
 						// to do: handle error
-					}
+					//}
 				}
 			}
-			return isSuccess;	
+			return isSuccess;
 		}
 
 
