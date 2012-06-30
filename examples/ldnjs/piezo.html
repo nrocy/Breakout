@@ -20,13 +20,6 @@
 			arduino = new BO.IOBoard(host, port, useNode);
 			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
 
-				arduino.setDigitalPinMode(3, BO.Pin.PWM);
-				var buzzer = arduino.getDigitalPin(3);
-
-				buzzer.value = 1;
-				setTimeout(function() {
-					buzzer.value = 0;
-				}, 500);
 			});
 		}
 

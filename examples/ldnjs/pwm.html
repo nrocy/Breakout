@@ -20,9 +20,6 @@
 			arduino = new BO.IOBoard(host, port, useNode);
 			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
 
-				arduino.setDigitalPinMode(6, BO.Pin.PWM);
-				var led = arduino.getDigitalPin(6);
-				led.value = 0.5;
 			});
 		}
 

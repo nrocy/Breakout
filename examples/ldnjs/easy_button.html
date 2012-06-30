@@ -20,16 +20,6 @@
 			arduino = new BO.IOBoard(host, port, useNode);
 			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
 
-				var led = new BO.io.LED(arduino, arduino.getDigitalPin(7));
-				var button = new BO.io.Button(arduino, arduino.getDigitalPin(2));
-
-				button.addEventListener(BO.io.ButtonEvent.PRESS, function(event) {
-					led.on();
-				});
-
-				button.addEventListener(BO.io.ButtonEvent.RELEASE, function(event) {
-					led.off();
-				});
 			});
 		}
 

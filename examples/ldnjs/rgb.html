@@ -20,9 +20,6 @@
 			arduino = new BO.IOBoard(host, port, useNode);
 			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
 
-				var rgb = new BO.io.RGBLED(arduino, arduino.getDigitalPin(11), arduino.getDigitalPin(10), arduino.getDigitalPin(9));
-				rgb.fadeTo(255, 0, 255);
-
 			});
 		}
 

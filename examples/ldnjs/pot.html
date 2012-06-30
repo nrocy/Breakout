@@ -20,12 +20,6 @@
 			arduino = new BO.IOBoard(host, port, useNode);
 			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
 
-				arduino.enableAnalogPin(2);
-				var pot = arduino.getAnalogPin(2);
-
-				pot.addEventListener(BO.PinEvent.CHANGE, function(event) {
-					document.getElementById("pot").value = event.target.value;
-				});
 			});
 		}
 

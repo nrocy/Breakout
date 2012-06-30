@@ -21,12 +21,6 @@
 			arduino = new BO.IOBoard(host, port, useNode);
 			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
 
-				arduino.setDigitalPinMode(7, BO.Pin.DOUT);
-				var led = arduino.getDigitalPin(7);
-
-				setInterval(function() {
-					led.value = 1 - led.value;
-				}, 1000);
 			});
 		}
 

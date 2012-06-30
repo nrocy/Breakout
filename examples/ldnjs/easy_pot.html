@@ -20,11 +20,6 @@
 			arduino = new BO.IOBoard(host, port, useNode);
 			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
 
-				var pot = new BO.io.Potentiometer(arduino, arduino.getAnalogPin(2));
-				pot.addEventListener(BO.io.PotEvent.CHANGE, function(event) {
-					//TODO: minimum/maximum/average
-					document.getElementById("pot").value = event.target.value;
-				});
 			});
 		}
 
