@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Arduino Fun</title>
+	<script src="/dist/Breakout.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://smoothiecharts.org/smoothie.js" type="text/javascript"></script>
+
+	<!-- only needed for node, included to make life easier -->
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript">
+		window.onload = function() {
+			var useNode = false,
+				host = "localhost",
+				port = (useNode ? 8080 : 8887),
+				arduino;
+
+			// Enable debug output
+			BO.enableDebugging = true;
+
+			var tempSeries = new TimeSeries(),
+				chart = new SmoothieChart();
+
+			chart.addTimeSeries(tempSeries, {strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4});
+			chart.streamTo(document.getElementById("chart"), 500);
+
+			arduino = new BO.IOBoard(host, port, useNode);
+			arduino.addEventListener(BO.IOBoardEvent.READY, function(event) {
+
+				arduino.enableAnalogPin(1);
+				var sensor = arduino.getAnalogPin(1);
+
+				sensor.addEventListener(BO.PinEvent.CHANGE, function(event) {
+					var milliVolts = event.target.value * 5000,
+						temperature = (milliVolts - 500) / 10;
+
+					tempSeries.append(new Date().getTime(), event.target.value);
+				});
+			});
+		}
+
+	</script>
+</head>
+<body>
+	<canvas id="chart" width="800" height="400"></canvas>
+</body>
+</html>
